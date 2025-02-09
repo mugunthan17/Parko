@@ -45,6 +45,7 @@ function App() {
       "name": "Parko",
       "description": "Payment for Parking",
       "image": LOGO,
+      "payment_capture": 1,
       "order_id": order.id,
       "handler": async function (response) {
         const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
