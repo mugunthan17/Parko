@@ -11,12 +11,12 @@ function App() {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     chargingFacility: isEV ? "YES" : "NO",
-    amount: isEV ? 15 : 10,
+    amount: isEV ? 2 : 1,
   });
 
   useEffect(() => {
     if (!isEV) {
-      setFormData((prev) => ({ ...prev, chargingFacility: "NO", amount: 10 }));
+      setFormData((prev) => ({ ...prev, chargingFacility: "NO", amount: 1 }));
     }
   }, [isEV]);
 
@@ -108,7 +108,7 @@ function App() {
               id="chargingFacility"
               value={formData.chargingFacility}
               onChange={(e) => setFormData((prev) => ({
-                ...prev, chargingFacility: e.target.value, amount: e.target.value === "YES" ? 15 : 10
+                ...prev, chargingFacility: e.target.value, amount: e.target.value === "YES" ? 2 : 1
               }))}
               className="mt-2 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#181818]"
             >
