@@ -103,7 +103,7 @@ function App() {
         {isEV && (
           <div className="flex flex-col mt-6">
             <label htmlFor="chargingFacility" className="text-xl sm:text-lg text-[#181818]">
-              Do you need Charging Facility for Your EV?
+              Do you need Charging Facility for your EV?
             </label>
             <select
               id="chargingFacility"
