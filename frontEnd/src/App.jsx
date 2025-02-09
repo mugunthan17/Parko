@@ -65,7 +65,7 @@ function App() {
       },
       "prefill": {
         "name": "Sarwesh",
-        "email": "sarweshBhai@gmail.com",
+        "email": "sarweshchandran@gmail.com",
         "contact": formData.phoneNumber
       },
       "theme": { "color": "#3399cc" }
