@@ -39,7 +39,7 @@ function App() {
     const order = await response.json();
 
     var options = {
-      "key": "rzp_test_yMwT16HLYlclAp",
+      "key": "rzp_live_xOh3D48Ljnx2z9",
       "amount": formData.amount * 100,
       "currency": "INR",
       "name": "Parko",
