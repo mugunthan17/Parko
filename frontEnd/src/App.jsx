@@ -21,6 +21,9 @@ function App() {
   }, [isEV]);
 
   const handleSubmit = async (e) => {
+    if (formData.phoneNumber === "") {
+      alert("Please Enter Your Mobile Number");
+    } else {
     e.preventDefault();
     const response = await fetch("https://parko-backend.onrender.com/order", {
       method: "POST",
@@ -68,6 +71,7 @@ function App() {
 
     var rzp1 = new window.Razorpay(options);
     rzp1.open();
+    }
   };
 
   return (
