@@ -22,7 +22,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/order", {
+    const response = await fetch("https://parko-backend.onrender.com/order", {
       method: "POST",
       body: JSON.stringify({
         amount: formData.amount * 100,
@@ -43,7 +43,7 @@ function App() {
       "image": LOGO,
       "order_id": order.id,
       "handler": async function (response) {
-        const validateRes = await fetch("http://localhost:5000/order/validate", {
+        const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
           method: "POST",
           body: JSON.stringify(response),
           headers: { "Content-Type": "application/json" },
