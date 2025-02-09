@@ -21,6 +21,7 @@ function App() {
   }, [isEV]);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (formData.phoneNumber === "") {
       alert("Please Enter Your Mobile Number");
     } else {
