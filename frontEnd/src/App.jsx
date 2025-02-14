@@ -59,6 +59,20 @@ function App() {
 
         if (jsonRes.msg === "Success") {
           alert("Your Payment is Success!! 🎉. Gate opened to park your car");
+          fetch(`http://192.168.33.124/open_gate?status=success&charging=${formData.chargingFacility}`, { // 192.168.15.124(Galaxy M14) 192.168.1.40(Airtel_Aishnna) 192.168.33.124(Nithish Net)
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then(data => console.log("ESP8266 Response:", data))
+            .catch(error => console.error("Error sending request to ESP8266:", error.message));
         } else {
           alert("Your Payment is Failed!! ⚠️.");
         }
