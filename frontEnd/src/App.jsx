@@ -59,7 +59,7 @@ function App() {
 
         if (jsonRes.msg === "Success") {
           alert("Your Payment is Success!! 🎉. Gate opened to park your car");
-          fetch(`http://192.168.33.124/open_gate?status=success&charging=${formData.chargingFacility}`, { // 192.168.15.124(Galaxy M14) 192.168.1.40(Airtel_Aishnna) 192.168.33.124(Nithish Net)
+          fetch(`https://7fef-2409-40f4-3-c33d-c113-5c36-751-fc5a.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility}`, { // 192.168.15.124(Galaxy M14) 192.168.1.40(Airtel_Aishnna) 192.168.33.124(Nithish Net)
             method: "GET",
             headers: {
               "Content-Type": "application/json",
