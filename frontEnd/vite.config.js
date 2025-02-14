@@ -8,7 +8,8 @@ export default defineConfig({
     proxy: {
       "/open-gate": {
         //target: 'http://192.168.1.40',
-        target: "http://192.168.33.124",
+        //target: "http://192.168.33.124",
+        target: "http://18.142.128.26",
         changeOrigin: true,
       },
     },
