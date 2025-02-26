@@ -71,15 +71,15 @@ function App() {
 
               // **Send request to ESP8266 via ngrok**
               const espResponse = await fetch(
-                `https://49b5-2409-40f4-40ce-54b7-405a-9eec-e24e-9128.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility}`,
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  mode: "cors",
-                }
-              );
+  `/open_gate?status=success&charging=${formData.chargingFacility}`,
+  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);
+
 
               // Check ESP8266 response
               const espData = await espResponse.text();
