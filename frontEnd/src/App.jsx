@@ -24,81 +24,70 @@ function App() {
     e.preventDefault();
     if (formData.phoneNumber === "") {
       alert("Please Enter Your Mobile Number");
-      return;
-    }
-
-    try {
-      const response = await fetch("https://parko-backend.onrender.com/order", {
-        method: "POST",
-        body: JSON.stringify({
-          amount: formData.amount * 100,
-          currency: "INR",
-          receipt: "receipt101",
-        }),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const order = await response.json();
-
-      var options = {
-        key: "rzp_test_yMwT16HLYlclAp",
+    } else {
+    e.preventDefault();
+    const response = await fetch("https://parko-backend.onrender.com/order", {
+      method: "POST",
+      body: JSON.stringify({
         amount: formData.amount * 100,
         currency: "INR",
-        name: "Parko",
-        description: "Payment for Parking",
-        image: LOGO,
-        payment_capture: 1,
-        order_id: order.id,
-        handler: async function (response) {
-          try {
-            const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
-              method: "POST",
-              body: JSON.stringify(response),
-              headers: { "Content-Type": "application/json" },
-            });
+        receipt: "receipt101",
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
 
-            const jsonRes = await validateRes.json();
-            console.log(jsonRes);
+    const order = await response.json();
 
-            if (jsonRes.msg === "Success") {
-              alert("Your Payment is Success!! 🎉. Gate opened to park your car");
+    var options = {
+      "key": "rzp_test_yMwT16HLYlclAp",
+      "amount": formData.amount * 100,
+      "currency": "INR",
+      "name": "Parko",
+      "description": "Payment for Parking",
+      "image": LOGO,
+      "payment_capture": 1,
+      "order_id": order.id,
+      "handler": async function (response) {
+        const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
+          method: "POST",
+          body: JSON.stringify(response),
+          headers: { "Content-Type": "application/json" },
+        });
 
-              const gateResponse = await fetch(
-                https://c8a4-2409-40f4-40ce-54b7-a01e-1e30-c25-f34b.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility},
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  mode: "cors",
-                }
-              );
+        const jsonRes = await validateRes.json();
+        console.log(jsonRes);
 
-              if (!gateResponse.ok) {
-                throw new Error("Failed to communicate with ESP8266");
+        if (jsonRes.msg === "Success") {
+          alert("Your Payment is Success!! 🎉. Gate opened to park your car");
+          fetch(`https://c8a4-2409-40f4-40ce-54b7-a01e-1e30-c25-f34b.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility}`, { // 192.168.15.124(Galaxy M14) 192.168.1.40(Airtel_Aishnna) 192.168.33.124(Nithish Net)
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode : "cors"
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
               }
+              return response.json();
+            })
+            .then(data => console.log("ESP8266 Response:", data))
+            .catch(error => console.error("Error sending request to ESP8266:", error.message));
+        } else {
+          alert("Your Payment is Failed!! ⚠️.");
+        }
+      },
+      "prefill": {
+        "name": "Sarwesh",
+        "email": "sarweshchandran@gmail.com",
+        "contact": formData.phoneNumber
+      },
+      "theme": { "color": "#3399cc" }
+    };
 
-              const gateData = await gateResponse.json();
-              console.log("ESP8266 Response:", gateData);
-            } else {
-              alert("Your Payment Failed!! ⚠.");
-            }
-          } catch (error) {
-            console.error("Error during payment validation:", error);
-          }
-        },
-        prefill: {
-          name: "Sarwesh",
-          email: "sarweshchandran@gmail.com",
-          contact: formData.phoneNumber,
-        },
-        theme: { color: "#3399cc" },
-      };
-
-      var rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.error("Error processing payment:", error);
+    var rzp1 = new window.Razorpay(options);
+    rzp1.open();
     }
   };
 
@@ -119,12 +108,9 @@ function App() {
             name="mobileNum"
             placeholder="Enter 10-digit Mobile Number"
             value={formData.phoneNumber}
-            onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
-                phoneNumber: e.target.value.replace(/[^0-9]/g, "").slice(0, 10),
-              }))
-            }
+            onChange={(e) => setFormData((prev) => ({
+              ...prev, phoneNumber: e.target.value.replace(/[^0-9]/g, "").slice(0, 10)
+            }))}
             maxLength="10"
             className="pl-[20px] mt-2 w-full p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#181818]"
           />
@@ -137,13 +123,9 @@ function App() {
             <select
               id="chargingFacility"
               value={formData.chargingFacility}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  chargingFacility: e.target.value,
-                  amount: e.target.value === "YES" ? 2 : 1,
-                }))
-              }
+              onChange={(e) => setFormData((prev) => ({
+                ...prev, chargingFacility: e.target.value, amount: e.target.value === "YES" ? 2 : 1
+              }))}
               className="mt-2 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#181818]"
             >
               <option value="YES">YES</option>
