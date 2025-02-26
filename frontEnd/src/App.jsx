@@ -22,7 +22,8 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.phoneNumber === "") {
+
+    if (formData.phoneNumber.trim() === "") {
       alert("Please Enter Your Mobile Number");
       return;
     }
@@ -38,53 +39,45 @@ function App() {
         headers: { "Content-Type": "application/json" },
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to create order");
+      }
+
       const order = await response.json();
 
-      var options = {
+      const options = {
         key: "rzp_test_yMwT16HLYlclAp",
         amount: formData.amount * 100,
         currency: "INR",
         name: "Parko",
         description: "Payment for Parking",
         image: LOGO,
-        payment_capture: 1,
         order_id: order.id,
         handler: async function (response) {
-          try {
-            const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
-              method: "POST",
-              body: JSON.stringify(response),
-              headers: { "Content-Type": "application/json" },
-            });
+          const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
+            method: "POST",
+            body: JSON.stringify(response),
+            headers: { "Content-Type": "application/json" },
+          });
 
-            const jsonRes = await validateRes.json();
-            console.log(jsonRes);
+          const jsonRes = await validateRes.json();
 
-            if (jsonRes.msg === "Success") {
-              alert("Your Payment is Success!! 🎉. Gate opened to park your car");
-
-              const gateResponse = await fetch(
-                https://c8a4-2409-40f4-40ce-54b7-a01e-1e30-c25-f34b.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility},
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  mode: "cors",
-                }
-              );
-
-              if (!gateResponse.ok) {
-                throw new Error("Failed to communicate with ESP8266");
+          if (jsonRes.msg === "Success") {
+            alert("Your Payment is Successful! 🎉 Gate opened.");
+            
+            await fetch(
+              `https://c8a4-2409-40f4-40ce-54b7-a01e-1e30-c25-f34b.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility}`,
+              {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                mode: "cors",
               }
-
-              const gateData = await gateResponse.json();
-              console.log("ESP8266 Response:", gateData);
-            } else {
-              alert("Your Payment Failed!! ⚠.");
-            }
-          } catch (error) {
-            console.error("Error during payment validation:", error);
+            )
+              .then((res) => res.json())
+              .then((data) => console.log("ESP8266 Response:", data))
+              .catch((error) => console.error("ESP8266 Request Error:", error.message));
+          } else {
+            alert("Your Payment Failed ⚠️.");
           }
         },
         prefill: {
@@ -95,10 +88,11 @@ function App() {
         theme: { color: "#3399cc" },
       };
 
-      var rzp1 = new window.Razorpay(options);
+      const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
-      console.error("Error processing payment:", error);
+      console.error("Payment error:", error.message);
+      alert("Something went wrong. Please try again.");
     }
   };
 
