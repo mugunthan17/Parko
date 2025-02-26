@@ -59,7 +59,7 @@ function App() {
 
         if (jsonRes.msg === "Success") {
           alert("Your Payment is Success!! 🎉. Gate opened to park your car");
-          fetch(`https://7b45-2409-40f4-3-c33d-c113-5c36-751-fc5a.ngrok-free.app/p/open_gate?status=success&charging=${formData.chargingFacility}`, { // 192.168.15.124(Galaxy M14) 192.168.1.40(Airtel_Aishnna) 192.168.33.124(Nithish Net)
+          fetch(`https://78cc-2409-40f4-40ce-54b7-a01e-1e30-c25-f34b.ngrok-free.app:80/open_gate?status=success&charging=${formData.chargingFacility}`, { // 192.168.15.124(Galaxy M14) 192.168.1.40(Airtel_Aishnna) 192.168.33.124(Nithish Net)
             method: "GET",
             headers: {
               "Content-Type": "application/json",
