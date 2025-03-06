@@ -80,7 +80,7 @@ function App() {
 
               // **Redirect user to success page**
               setTimeout(() => {
-                window.location.href = "https://your-success-page.com";  // Change to your success page
+                window.location.href = "https://sarweshwaran-rs.github.io/parko/";  // Change to your success page
               }, 2000);
 
             } else {
