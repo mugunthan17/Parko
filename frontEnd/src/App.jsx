@@ -29,7 +29,6 @@ function App() {
     }
 
     try {
-      // Create an order for payment
       const response = await fetch("https://parko-backend.onrender.com/order", {
         method: "POST",
         body: JSON.stringify({
@@ -46,7 +45,6 @@ function App() {
 
       const order = await response.json();
 
-      // Configure Razorpay payment
       const options = {
         key: "rzp_test_yMwT16HLYlclAp",
         amount: formData.amount * 100,
@@ -57,7 +55,6 @@ function App() {
         order_id: order.id,
         handler: async function (response) {
           try {
-            // Validate payment
             const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
               method: "POST",
               body: JSON.stringify(response),
@@ -69,7 +66,6 @@ function App() {
             if (jsonRes.msg === "Success") {
               alert("Your Payment is Successful! 🎉 Gate opened.");
 
-              // **Send request to ESP8266 in the background**
               fetch(`https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
@@ -78,10 +74,9 @@ function App() {
               .then(data => console.log("ESP8266 Response:", data))
               .catch(error => console.error("ESP8266 Error:", error));
 
-              // **Redirect user to success page**
-              // setTimeout(() => {
-              //   window.location.href = "https://your-success-page.com";  // Change to your success page
-              // }, 2000);
+              setTimeout(() => {
+                window.location.href = "https://sarweshwaran-rs.github.io/parko/";
+              }, 2000);
 
             } else {
               alert("Your Payment Failed ⚠️.");
@@ -99,7 +94,6 @@ function App() {
         theme: { color: "#3399cc" },
       };
 
-      // Open Razorpay payment
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
