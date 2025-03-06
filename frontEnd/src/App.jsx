@@ -69,8 +69,8 @@ function App() {
             if (jsonRes.msg === "Success") {
               alert("Your Payment is Successful! 🎉 Gate opened.");
 
-              // **Send request to ESP8266 in the background**
-              fetch(`https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}`, {
+              // *Send request to ESP8266 in the background*
+              fetch(https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
               })
@@ -78,13 +78,13 @@ function App() {
               .then(data => console.log("ESP8266 Response:", data))
               .catch(error => console.error("ESP8266 Error:", error));
 
-              // **Redirect user to success page**
+              // *Redirect user to success page*
               // setTimeout(() => {
               //   window.location.href = "https://your-success-page.com";  // Change to your success page
               // }, 2000);
 
             } else {
-              alert("Your Payment Failed ⚠️.");
+              alert("Your Payment Failed ⚠.");
             }
           } catch (error) {
             console.error("Error validating payment:", error.message);
