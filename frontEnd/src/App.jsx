@@ -79,9 +79,9 @@ function App() {
               .catch(error => console.error("ESP8266 Error:", error));
 
               // **Redirect user to success page**
-              setTimeout(() => {
-                window.location.href = "https://sarweshwaran-rs.github.io/parko/";  // Change to your success page
-              }, 2000);
+              // setTimeout(() => {
+              //   window.location.href = "https://your-success-page.com";  // Change to your success page
+              // }, 2000);
 
             } else {
               alert("Your Payment Failed ⚠️.");
