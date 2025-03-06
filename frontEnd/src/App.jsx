@@ -69,27 +69,14 @@ function App() {
             if (jsonRes.msg === "Success") {
               alert("Your Payment is Successful! 🎉 Gate opened.");
 
-              // **Send request to ESP8266 via ngrok**
-              const espResponse = await fetch(
-  `https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility}`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
-);
-
-
-              // Check ESP8266 response
-              const espData = await espResponse.text();
-              console.log("ESP8266 Response:", espData);
-              alert(`ESP8266 Response: ${espData}`);
+              // Automatically visit the ngrok link
+              const ngrokLink = `https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}`;
+              window.location.href = ngrokLink;
             } else {
               alert("Your Payment Failed ⚠️.");
             }
           } catch (error) {
-            console.error("Error validating payment or contacting ESP8266:", error.message);
+            console.error("Error validating payment:", error.message);
             alert("An error occurred. Please try again.");
           }
         },
