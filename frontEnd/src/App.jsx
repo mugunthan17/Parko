@@ -24,7 +24,7 @@ function App() {
     e.preventDefault();
 
     if (formData.phoneNumber.trim() === "") {
-      alert("Please Enter Your Mobile Number");
+      alert("Please Enter your Mobile Number");
       return;
     }
 
