@@ -15,16 +15,18 @@ function App() {
   });
 
   useEffect(() => {
-    if (!isEV) {
-      setFormData((prev) => ({ ...prev, chargingFacility: "NO", amount: 1 }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      chargingFacility: isEV ? "YES" : "NO",
+      amount: isEV ? 2 : 1,
+    }));
   }, [isEV]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.phoneNumber.trim() === "") {
-      alert("Please Enter your Mobile Number");
+    if (formData.phoneNumber.trim() === "" || formData.phoneNumber.length !== 10) {
+      alert("Please enter a valid 10-digit Mobile Number.");
       return;
     }
 
@@ -35,7 +37,7 @@ function App() {
         body: JSON.stringify({
           amount: formData.amount * 100,
           currency: "INR",
-          receipt: "receipt101",
+          receipt: `receipt_${Date.now()}`,
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -48,7 +50,7 @@ function App() {
 
       // Configure Razorpay payment
       const options = {
-        key: "rzp_test_yMwT16HLYlclAp",
+        key: process.env.REACT_APP_RAZORPAY_KEY, // Secure Razorpay key
         amount: formData.amount * 100,
         currency: "INR",
         name: "Parko",
@@ -67,24 +69,14 @@ function App() {
             const jsonRes = await validateRes.json();
 
             if (jsonRes.msg === "Success") {
-              alert("Your Payment is Successful! 🎉 Gate opened.");
+              alert("Your Payment is Successful! 🎉 Gate opening...");
 
-              // **Send request to ESP8266 in the background**
-              fetch(`https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-              })
-              .then(response => response.text())
-              .then(data => console.log("ESP8266 Response:", data))
-              .catch(error => console.error("ESP8266 Error:", error));
-
-              // **Redirect user to success page**
-              setTimeout(() => {
-                window.location.href = "https://sarweshwaran-rs.github.io/parko/";  // Change to your success page
-              }, 2000);
+              // Redirect user to ESP8266 API link for opening the gate
+              const ngrokLink = `https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}`;
+              window.location.href = ngrokLink;
 
             } else {
-              alert("Your Payment failed ⚠️.");
+              alert("Your Payment Failed ⚠️.");
             }
           } catch (error) {
             console.error("Error validating payment:", error.message);
