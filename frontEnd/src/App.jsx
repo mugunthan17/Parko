@@ -57,7 +57,7 @@ function App() {
         description: "Payment for Parking",
         image: LOGO,
         order_id: order.id,
-        handler: async function (response) {
+ handler: async function (response) {
   try {
     // Validate payment
     const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
@@ -69,11 +69,16 @@ function App() {
     const jsonRes = await validateRes.json();
 
     if (jsonRes.msg === "Success") {
-      alert("Your Payment is Successful! 🎉 Redirecting...");
+      alert("Your Payment is Successful! 🎉 Gate opening...");
 
-      // Redirect to the Parko website instead of the ngrok link
-      window.location.href = "https://sarweshwaran-rs.github.io/parko/";
+      // Redirect to ngrok link
+      const ngrokLink = "https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=" + formData.chargingFacility.toLowerCase();
+      window.location.href = ngrokLink;
 
+      // After 1 second, redirect to the final page
+      setTimeout(() => {
+        window.location.href = "https://sarweshwaran-rs.github.io/parko/";
+      }, 1000);
     } else {
       alert("Your Payment Failed ⚠️.");
     }
