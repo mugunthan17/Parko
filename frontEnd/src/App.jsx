@@ -58,31 +58,30 @@ function App() {
         image: LOGO,
         order_id: order.id,
         handler: async function (response) {
-          try {
-            // Validate payment
-            const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
-              method: "POST",
-              body: JSON.stringify(response),
-              headers: { "Content-Type": "application/json" },
-            });
+  try {
+    // Validate payment
+    const validateRes = await fetch("https://parko-backend.onrender.com/order/validate", {
+      method: "POST",
+      body: JSON.stringify(response),
+      headers: { "Content-Type": "application/json" },
+    });
 
-            const jsonRes = await validateRes.json();
+    const jsonRes = await validateRes.json();
 
-            if (jsonRes.msg === "Success") {
-              alert("Your Payment is Successful! 🎉 Gate opening...");
+    if (jsonRes.msg === "Success") {
+      alert("Your Payment is Successful! 🎉 Redirecting...");
 
-              // Redirect user to ESP8266 API link for opening the gate
-              const ngrokLink = `https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=${formData.chargingFacility.toLowerCase()}`;
-              window.location.href = ngrokLink;
+      // Redirect to the Parko website instead of the ngrok link
+      window.location.href = "https://sarweshwaran-rs.github.io/parko/";
 
-            } else {
-              alert("Your Payment Failed ⚠️.");
-            }
-          } catch (error) {
-            console.error("Error validating payment:", error.message);
-            alert("An error occurred. Please try again.");
-          }
-        },
+    } else {
+      alert("Your Payment Failed ⚠️.");
+    }
+  } catch (error) {
+    console.error("Error validating payment:", error.message);
+    alert("An error occurred. Please try again.");
+  }
+},
         prefill: {
           name: "Sarwesh",
           email: "sarweshchandran@gmail.com",
