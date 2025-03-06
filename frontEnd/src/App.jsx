@@ -71,7 +71,7 @@ function App() {
 
               // **Send request to ESP8266 via ngrok**
               const espResponse = await fetch(
-  `/open_gate?status=success&charging=${formData.chargingFacility}`,
+  `https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app//open_gate?status=success&charging=${formData.chargingFacility}`,
   {
     method: "GET",
     headers: {
