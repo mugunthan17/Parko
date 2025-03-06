@@ -84,7 +84,7 @@ function App() {
               }, 2000);
 
             } else {
-              alert("Your Payment Failed ⚠️.");
+              alert("Your Payment failed ⚠️.");
             }
           } catch (error) {
             console.error("Error validating payment:", error.message);
