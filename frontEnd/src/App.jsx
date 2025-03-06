@@ -117,7 +117,7 @@ function App() {
       <form onSubmit={handleSubmit} className="mt-10 w-full max-w-[70%] min-w-[50%]">
         <div className="flex flex-col">
           <label htmlFor="mobileNum" className="text-xl sm:text-lg text-[#181818]">
-            Enter Your Mobile Number
+            Enter your Mobile Number
           </label>
           <input
             type="tel"
