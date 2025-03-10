@@ -72,7 +72,7 @@ function App() {
       alert("Your Payment is Successful! 🎉 Gate opening...");
 
       // Redirect to ngrok link
-      const ngrokLink = "https://87e1-2409-40f4-30-5164-3804-3c5-eef5-e860.ngrok-free.app/open_gate?status=success&charging=" + formData.chargingFacility.toLowerCase();
+      const ngrokLink = "https://9a4f-2409-40f4-ad-a316-ccfb-fcda-46f0-8c23.ngrok-free.app/open_gate?status=success&charging=" + formData.chargingFacility.toLowerCase();
       window.location.href = ngrokLink;
 
       // After 1 second, redirect to the final page
