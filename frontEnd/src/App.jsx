@@ -11,7 +11,7 @@ function App() {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     chargingFacility: isEV ? "YES" : "NO",
-    amount: isEV ? 2 : 1,
+    amount: isEV ? 25 : 15,
   });
 
   useEffect(() => {
