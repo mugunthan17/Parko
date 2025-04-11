@@ -72,7 +72,7 @@ function App() {
       alert("Your Payment is Successful! 🎉 Gate opening...");
 
       // Redirect to ngrok link
-      const ngrokLink = "https://ae05-2409-40f4-3a-9a94-a532-f678-a0b-e4b4.ngrok-free.app/open_gate?status=success&charging=" + formData.chargingFacility.toLowerCase();
+      const ngrokLink = "https://c85a-2409-40f4-19-b4ea-b0b6-9012-927f-9a1e.ngrok-free.app/open_gate?status=success&charging=" + formData.chargingFacility.toLowerCase();
       window.location.href = ngrokLink;
 
       // After 1 second, redirect to the final page
@@ -143,7 +143,7 @@ function App() {
                 setFormData((prev) => ({
                   ...prev,
                   chargingFacility: e.target.value,
-                  amount: e.target.value === "YES" ? 2 : 1,
+                  amount: e.target.value === "YES" ? 25 : 15,
                 }))
               }
               className="mt-2 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#181818]"
