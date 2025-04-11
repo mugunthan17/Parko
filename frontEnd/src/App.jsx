@@ -18,7 +18,7 @@ function App() {
     setFormData((prev) => ({
       ...prev,
       chargingFacility: isEV ? "YES" : "NO",
-      amount: isEV ? 2 : 1,
+      amount: isEV ? 25 : 15,
     }));
   }, [isEV]);
 
