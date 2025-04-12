@@ -11,14 +11,14 @@ function App() {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     chargingFacility: isEV ? "YES" : "NO",
-    amount: isEV ? 25 : 15,
+    amount: isEV ? 2 : 1,
   });
 
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
       chargingFacility: isEV ? "YES" : "NO",
-      amount: isEV ? 25 : 15,
+      amount: isEV ? 2 : 1,
     }));
   }, [isEV]);
 
@@ -143,7 +143,7 @@ function App() {
                 setFormData((prev) => ({
                   ...prev,
                   chargingFacility: e.target.value,
-                  amount: e.target.value === "YES" ? 25 : 15,
+                  amount: e.target.value === "YES" ? 2 : 1,
                 }))
               }
               className="mt-2 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-[#181818]"
